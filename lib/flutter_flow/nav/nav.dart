@@ -35,12 +35,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => HomePageWidget(),
+      errorBuilder: (context, state) => SplashPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => SplashPageWidget(),
         ),
         FFRoute(
           name: 'HomePage',
@@ -63,7 +63,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'SplashPage',
           path: '/splashPage',
-          builder: (context, params) => SplashPageWidget(),
+          builder: (context, params) => SplashPageWidget(
+            bluetoothAdapterState:
+                params.getParam('bluetoothAdapterState', ParamType.String),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

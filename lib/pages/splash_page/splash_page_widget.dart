@@ -11,7 +11,13 @@ import 'splash_page_model.dart';
 export 'splash_page_model.dart';
 
 class SplashPageWidget extends StatefulWidget {
-  const SplashPageWidget({Key? key}) : super(key: key);
+  const SplashPageWidget({
+    Key? key,
+    String? bluetoothAdapterState,
+  })  : this.bluetoothAdapterState = bluetoothAdapterState ?? '(unset)',
+        super(key: key);
+
+  final String bluetoothAdapterState;
 
   @override
   _SplashPageWidgetState createState() => _SplashPageWidgetState();

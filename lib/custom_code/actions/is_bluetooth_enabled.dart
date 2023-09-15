@@ -6,11 +6,22 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'dart:developer';
 
 Future<bool> isBluetoothEnabled() async {
-  await FlutterBluePlus.instance.isOn;
-  await Future.delayed(Duration(milliseconds: 100));
-  final state = await FlutterBluePlus.instance.state.first;
-  return state == BluetoothState.on;
+  final available = await FlutterBluePlus.isAvailable;
+  log("isBluetoothEnabled.available: $available");
+  if (!available) {
+    return false;
+  }
+  if (Platform.isAndroid) {
+    FlutterBluePlus.turnOn;
+    await Future.delayed(Duration(milliseconds: 100));
+  }
+  final state = await FlutterBluePlus.adapterState;
+  log("isBluetoothEnabled.adapterState: $state");
+  return state == BluetoothAdapterState.on;
 }
