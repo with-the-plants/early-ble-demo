@@ -264,13 +264,36 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             ),
                                                           ],
                                                         ),
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_forward_ios_rounded,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          size: 24.0,
+                                                        InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            context.pushNamed(
+                                                              'DevicePage',
+                                                              queryParameters: {
+                                                                'deviceName':
+                                                                    serializeParam(
+                                                                  '',
+                                                                  ParamType
+                                                                      .String,
+                                                                ),
+                                                              }.withoutNulls,
+                                                            );
+                                                          },
+                                                          child: Icon(
+                                                            Icons
+                                                                .arrow_forward_ios_rounded,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            size: 24.0,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -438,13 +461,54 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                 ),
                                                               ],
                                                             ),
-                                                            Icon(
-                                                              Icons
-                                                                  .arrow_forward_ios_rounded,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText,
-                                                              size: 24.0,
+                                                            InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                context
+                                                                    .pushNamed(
+                                                                  'DevicePage',
+                                                                  queryParameters:
+                                                                      {
+                                                                    'deviceName':
+                                                                        serializeParam(
+                                                                      foundDevicesListItem
+                                                                          .name,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'deviceId':
+                                                                        serializeParam(
+                                                                      foundDevicesListItem
+                                                                          .id,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'deviceRssi':
+                                                                        serializeParam(
+                                                                      foundDevicesListItem
+                                                                          .rssi,
+                                                                      ParamType
+                                                                          .int,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                );
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .arrow_forward_ios_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                size: 24.0,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
