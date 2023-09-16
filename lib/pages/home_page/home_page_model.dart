@@ -10,6 +10,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomePageModel extends FlutterFlowModel {
+  ///  Local state fields for this page.
+
+  List<BTDeviceStruct> foundDevices = [];
+  void addToFoundDevices(BTDeviceStruct item) => foundDevices.add(item);
+  void removeFromFoundDevices(BTDeviceStruct item) => foundDevices.remove(item);
+  void removeAtIndexFromFoundDevices(int index) => foundDevices.removeAt(index);
+  void updateFoundDevicesAtIndex(
+          int index, Function(BTDeviceStruct) updateFn) =>
+      foundDevices[index] = updateFn(foundDevices[index]);
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
