@@ -61,6 +61,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
@@ -336,7 +338,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           child: Builder(
                                             builder: (context) {
                                               final foundDevicesList =
-                                                  _model.foundDevices!.toList();
+                                                  FFAppState()
+                                                      .foundDevices
+                                                      .toList();
                                               return ListView.builder(
                                                 padding: EdgeInsets.zero,
                                                 shrinkWrap: true,

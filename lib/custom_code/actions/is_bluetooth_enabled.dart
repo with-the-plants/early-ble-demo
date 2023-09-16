@@ -31,6 +31,14 @@ Future<bool> isBluetoothEnabled() async {
   // TBD. I don't like using Completer, but that is the best I have now.
   Completer<bool> completer = new Completer<bool>();
   // TBD. This stream should be handled more centrally, not here.
+  // 2023-09-16 13:03:08.102 early_ble_demo[20595:3455267] [FBP-iOS] centralManagerDidUpdateState CBManagerStatePoweredOff
+  // 2023-09-16 13:03:08.102 early_ble_demo[20595:3455267] [FBP-iOS] disconnectAllDevices
+  // 2023-09-16 14:12:34.733 early_ble_demo[20595:3455267] [FBP-iOS] centralManagerDidUpdateState CBManagerStatePoweredOn
+  // [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Bad state: Future already completed
+  // #0      _AsyncCompleter.complete (dart:async/future_impl.dart:41:31)
+  // #1      isBluetoothEnabled.<anonymous closure> (package:mot_p_first_bluetooth_demo/custom_code/actions/is_bluetooth_enabled.dart:43:19)
+  // #2      Stream.forEach.<anonymous closure>.<anonymous closure> (dart:async/stream.dart:1193:38)
+
   stateStream.forEach((state) async {
     log("isBluetoothEnabled: $state");
     switch (state) {
