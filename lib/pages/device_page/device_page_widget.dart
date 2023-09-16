@@ -4,7 +4,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/display_received_data/display_received_data_widget.dart';
 import '/widgets/stranght_indicator/stranght_indicator_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'device_page_model.dart';
@@ -16,13 +18,14 @@ class DevicePageWidget extends StatefulWidget {
     required this.deviceName,
     required this.deviceId,
     required this.deviceRssi,
-    required this.hasWriteCharacteristic,
-  }) : super(key: key);
+    bool? hasWriteCharacteristic,
+  })  : this.hasWriteCharacteristic = hasWriteCharacteristic ?? false,
+        super(key: key);
 
   final String? deviceName;
   final String? deviceId;
   final int? deviceRssi;
-  final bool? hasWriteCharacteristic;
+  final bool hasWriteCharacteristic;
 
   @override
   _DevicePageWidgetState createState() => _DevicePageWidgetState();
@@ -37,6 +40,13 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => DevicePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await actions.connectDevice(
+        widget.deviceId!,
+      );
+    });
 
     _model.textController ??= TextEditingController();
   }
@@ -109,8 +119,10 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                     color: FlutterFlowTheme.of(context).error,
                     size: 28.0,
                   ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
+                  onPressed: () async {
+                    await actions.disconnectDevice(
+                      widget.deviceId!,
+                    );
                   },
                 ),
               ],
