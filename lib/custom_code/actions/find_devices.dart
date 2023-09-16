@@ -46,5 +46,6 @@ Future<void> findDevices() async {
   if (!isScanning) {
     log("findDevices: start a scan.");
     FlutterBluePlus.startScan();
+    await Future.delayed(Duration(milliseconds: 1000));
   }
 }
