@@ -29,7 +29,7 @@ Future<void> findDevices() async {
         state.updateFoundDevicesAtIndex(index, (BTDeviceStruct existing) {
           existing.name = name;
           existing.rssi = sr.rssi;
-          log("findDevices: updating $existing");
+          // log("findDevices: updating $existing");
           return existing;
         });
       } else {
@@ -38,7 +38,7 @@ Future<void> findDevices() async {
           id: id,
           rssi: sr.rssi,
         );
-        log("findDevices: adding $newDevice");
+        // log("findDevices: adding $newDevice");
         state.addToFoundDevices(newDevice);
       }
     });
