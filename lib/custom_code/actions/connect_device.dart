@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 // Imports other custom actions
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-// import '/custom_code/bluetooth_default_uuids.dart'
+import '/custom_code/bluetooth_default_uuids.dart';
 import 'dart:developer' show log;
 
 Future<void> connectDevice(String id) async {
@@ -20,9 +20,9 @@ Future<void> connectDevice(String id) async {
   services.forEach((BluetoothService service) {
     log("connectDevice: service: $service");
 
-    // BluetoothDefaultServiceUUID knownService =
-    //  BluetoothDefaultServiceUUID.values.firstWhere((uuid)
-    //    => (service.serviceUuid.toString() == uuid.uuid));
-    // log("connectDevice: knownService: $knownService");
+    BluetoothDefaultServiceUUID knownService = BluetoothDefaultServiceUUID
+        .values
+        .firstWhere((uuid) => (service.serviceUuid.toString() == uuid.uuid));
+    log("connectDevice: knownService: $knownService");
   });
 }
