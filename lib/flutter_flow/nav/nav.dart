@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '/backend/schema/structs/index.dart';
+
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -47,6 +49,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/homePage',
           builder: (context, params) => HomePageWidget(
             isBleEnabled: params.getParam('isBleEnabled', ParamType.bool),
+            foundDevices:
+                params.getParam<dynamic>('foundDevices', ParamType.JSON, true),
           ),
         ),
         FFRoute(

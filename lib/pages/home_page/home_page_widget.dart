@@ -1,8 +1,11 @@
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/stranght_indicator/stranght_indicator_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'home_page_model.dart';
@@ -12,10 +15,12 @@ class HomePageWidget extends StatefulWidget {
   const HomePageWidget({
     Key? key,
     bool? isBleEnabled,
+    required this.foundDevices,
   })  : this.isBleEnabled = isBleEnabled ?? false,
         super(key: key);
 
   final bool isBleEnabled;
+  final List<dynamic>? foundDevices;
 
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
@@ -30,6 +35,23 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.foundDevices = await actions.findDevices();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Scanning started…',
+            style: TextStyle(
+              color: FlutterFlowTheme.of(context).primaryText,
+            ),
+          ),
+          duration: Duration(milliseconds: 4000),
+          backgroundColor: FlutterFlowTheme.of(context).secondary,
+        ),
+      );
+    });
   }
 
   @override
@@ -313,117 +335,131 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 16.0, 0.0, 0.0),
-                                          child: ListView(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 12.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                    ),
-                                                  ),
-                                                  child: Padding(
+                                          child: Builder(
+                                            builder: (context) {
+                                              final foundDevicesList =
+                                                  widget.foundDevices!.toList();
+                                              return ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount:
+                                                    foundDevicesList.length,
+                                                itemBuilder: (context,
+                                                    foundDevicesListIndex) {
+                                                  final foundDevicesListItem =
+                                                      foundDevicesList[
+                                                          foundDevicesListIndex];
+                                                  return Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                16.0,
-                                                                12.0,
-                                                                16.0,
-                                                                12.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Column(
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 12.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondary,
+                                                        ),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    12.0,
+                                                                    16.0,
+                                                                    12.0),
+                                                        child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Row(
+                                                            Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           8.0,
                                                                           0.0),
-                                                                  child: Text(
-                                                                    'Sample IoT Device',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                        ),
-                                                                  ),
+                                                                      child:
+                                                                          Text(
+                                                                        getJsonField(
+                                                                          foundDevicesListItem,
+                                                                          r'''$.name''',
+                                                                        ).toString(),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyLarge
+                                                                            .override(
+                                                                              fontFamily: 'Outfit',
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                    StranghtIndicatorWidget(
+                                                                      key: Key(
+                                                                          'Key1pd_${foundDevicesListIndex}_of_${foundDevicesList.length}'),
+                                                                      rssi:
+                                                                          getJsonField(
+                                                                        foundDevicesListItem,
+                                                                        r'''$.rssi''',
+                                                                      ),
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .success,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                wrapWithModel(
-                                                                  model: _model
-                                                                      .stranghtIndicatorModel2,
-                                                                  updateCallback:
-                                                                      () => setState(
-                                                                          () {}),
-                                                                  child:
-                                                                      StranghtIndicatorWidget(
-                                                                    rssi: -61,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .success,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           5.0,
                                                                           0.0,
                                                                           0.0),
-                                                              child: Text(
-                                                                'HDVS-DSVDSV-SDBVSDB',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelSmall,
-                                                              ),
+                                                                  child: Text(
+                                                                    getJsonField(
+                                                                      foundDevicesListItem,
+                                                                      r'''$.id''',
+                                                                    ).toString(),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelSmall,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 24.0,
                                                             ),
                                                           ],
                                                         ),
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_forward_ios_rounded,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          size: 24.0,
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                                  );
+                                                },
+                                              );
+                                            },
                                           ),
                                         ),
                                       ],

@@ -1,4 +1,5 @@
 // Automatic FlutterFlow imports
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
@@ -21,7 +22,9 @@ Future<bool> isBluetoothEnabled() async {
     FlutterBluePlus.turnOn;
     await Future.delayed(Duration(milliseconds: 100));
   }
-  final state = await FlutterBluePlus.adapterState;
+  final stateStream = await FlutterBluePlus.adapterState;
+  // ARGH: This is an ugly hack, but works for now
+  final state = await stateStream.first;
   log("isBluetoothEnabled.adapterState: $state");
   return state == BluetoothAdapterState.on;
 }
