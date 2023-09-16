@@ -1,4 +1,3 @@
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -13,8 +12,6 @@ class HomePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Custom Action - findDevices] action in HomePage widget.
-  List<BTDeviceStruct>? foundDevices;
   // State field(s) for Switch widget.
   bool? switchValue;
   // Model for StranghtIndicator component.
