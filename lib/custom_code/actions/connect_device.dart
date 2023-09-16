@@ -20,9 +20,19 @@ Future<void> connectDevice(String id) async {
   services.forEach((BluetoothService service) {
     log("connectDevice: service: $service");
 
-    BluetoothDefaultServiceUUID knownService = BluetoothDefaultServiceUUID
+    final BluetoothDefaultServiceUUID knownService = BluetoothDefaultServiceUUID
         .values
-        .firstWhere((uuid) => (service.serviceUuid.toString() == uuid.uuid));
+        .firstWhere((uuid) => (service.uuid.toString() == uuid.uuid));
     log("connectDevice: knownService: $knownService");
+
+    switch (knownService) {
+      case BluetoothDefaultServiceUUID.deviceInformation:
+        final List<BluetoothCharacteristic> characteristics =
+            service.characteristics;
+        characteristics.forEach((c) {
+          log("connectDevice: characteristic: $c");
+        });
+        break;
+    }
   });
 }
