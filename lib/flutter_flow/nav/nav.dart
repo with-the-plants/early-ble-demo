@@ -49,8 +49,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/homePage',
           builder: (context, params) => HomePageWidget(
             isBleEnabled: params.getParam('isBleEnabled', ParamType.bool),
-            foundDevices:
-                params.getParam<dynamic>('foundDevices', ParamType.JSON, true),
           ),
         ),
         FFRoute(

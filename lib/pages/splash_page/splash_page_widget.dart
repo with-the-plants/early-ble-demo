@@ -35,7 +35,9 @@ class _SplashPageWidgetState extends State<SplashPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await requestPermission(bluetoothPermission);
+      if (isiOS || isAndroid) {
+        await requestPermission(bluetoothPermission);
+      }
       _model.bluetoothEnabled = await actions.isBluetoothEnabled();
 
       context.pushNamed(

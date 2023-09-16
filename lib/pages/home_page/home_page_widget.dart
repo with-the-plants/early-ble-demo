@@ -15,12 +15,10 @@ class HomePageWidget extends StatefulWidget {
   const HomePageWidget({
     Key? key,
     bool? isBleEnabled,
-    required this.foundDevices,
   })  : this.isBleEnabled = isBleEnabled ?? false,
         super(key: key);
 
   final bool isBleEnabled;
-  final List<dynamic>? foundDevices;
 
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
@@ -338,7 +336,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           child: Builder(
                                             builder: (context) {
                                               final foundDevicesList =
-                                                  widget.foundDevices!.toList();
+                                                  _model.foundDevices!.toList();
                                               return ListView.builder(
                                                 padding: EdgeInsets.zero,
                                                 shrinkWrap: true,

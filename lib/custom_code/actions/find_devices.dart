@@ -7,10 +7,21 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
+import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'dart:developer';
 
 Future<List<BTDeviceStruct>> findDevices() async {
+  final isScanning = FlutterBluePlus.isScanningNow;
+  if (!isScanning) {
+    FlutterBluePlus.startScan();
+    await Future.delayed(Duration(milliseconds: 1000));
+  }
+
+  Completer<List<BTDeviceStruct>> completer =
+      new Completer<List<BTDeviceStruct>>();
   List<BTDeviceStruct> devices = [];
 
   log("findDevices: constructing devices…");
@@ -23,17 +34,9 @@ Future<List<BTDeviceStruct>> findDevices() async {
         rssi: sr.rssi,
       ));
     });
+    log("findDevices: returning $devices");
+    completer.complete(devices);
   });
-  log("findDevices: constructing devices…done: $devices");
 
-  final isScanning = FlutterBluePlus.isScanningNow;
-  if (!isScanning) {
-    await FlutterBluePlus.startScan(
-      timeout: const Duration(seconds: 5),
-    );
-  }
-
-  return devices;
+  return completer.future;
 }
-
-DeviceIdentifier get remoteId => remoteId;
