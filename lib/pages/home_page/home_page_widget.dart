@@ -401,10 +401,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           0.0),
                                                                       child:
                                                                           Text(
-                                                                        getJsonField(
-                                                                          foundDevicesListItem,
-                                                                          r'''$.name''',
-                                                                        ).toString(),
+                                                                        foundDevicesListItem
+                                                                            .name,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyLarge
                                                                             .override(
@@ -415,11 +413,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     StranghtIndicatorWidget(
                                                                       key: Key(
                                                                           'Key1pd_${foundDevicesListIndex}_of_${foundDevicesList.length}'),
-                                                                      rssi:
-                                                                          getJsonField(
-                                                                        foundDevicesListItem,
-                                                                        r'''$.rssi''',
-                                                                      ),
+                                                                      rssi: foundDevicesListItem
+                                                                          .rssi,
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .success,
@@ -434,10 +429,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                           0.0,
                                                                           0.0),
                                                                   child: Text(
-                                                                    getJsonField(
-                                                                      foundDevicesListItem,
-                                                                      r'''$.id''',
-                                                                    ).toString(),
+                                                                    foundDevicesListItem
+                                                                        .id,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .labelSmall,
