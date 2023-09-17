@@ -44,7 +44,8 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.findDevices(
+      await actions.connectDevice(
+        widget.deviceId!,
         () async {
           setState(() {});
         },
