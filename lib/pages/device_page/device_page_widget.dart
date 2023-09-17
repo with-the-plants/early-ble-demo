@@ -142,9 +142,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                   child: wrapWithModel(
                     model: _model.gattServiceModel,
                     updateCallback: () => setState(() {}),
-                    child: GattServiceWidget(
-                      service: _model.services!.first,
-                    ),
+                    child: GattServiceWidget(),
                   ),
                 ),
               ],

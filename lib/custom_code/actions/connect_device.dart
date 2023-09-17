@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
 // Imports other custom actions
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -21,32 +23,39 @@ Future<List<GattServiceStruct>> connectDevice(String id) async {
   return services.map((BluetoothService service) {
     log("connectDevice: service: $service");
 
-    GattServiceStruct ss = GattServiceStruct(uuid: service.uuid.toString());
+    GattServiceStruct gss = GattServiceStruct(uuid: service.uuid.toString());
 
-    final BluetoothDefaultServiceUUID knownService = BluetoothDefaultServiceUUID
-        .values
-        .firstWhere((uuid) => (ss == uuid.uuid));
-    if (knownService) {
-      log("connectDevice: knownService: $knownService");
+    log("gss: $gss");
 
-      ss.name = knownService.name;
-
-      switch (knownService) {
-        case BluetoothDefaultServiceUUID.deviceInformation:
-          final List<BluetoothCharacteristic> characteristics =
-              service.characteristics;
-          characteristics.forEach((c) {
-            log("connectDevice: characteristic: $c");
-            final BluetoothDefaultCharacteristicUUID knownCharacteristic =
-                BluetoothDefaultCharacteristicUUID.values
-                    .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
-            log("connectDevice: knownCharacteristic: $knownCharacteristic");
-          });
-          break;
-        default:
-          break;
-      }
+    final BluetoothDefaultServiceUUID knownService;
+    try {
+      knownService = BluetoothDefaultServiceUUID.values
+          .firstWhere((uuid) => (gss.uuid == uuid.uuid));
+    } catch (e) {
+      return gss;
     }
-    return ss;
+
+    log("connectDevice: knownService: $knownService");
+    gss.name = knownService.name;
+
+    switch (knownService) {
+      case BluetoothDefaultServiceUUID.deviceInformation:
+        final List<BluetoothCharacteristic> characteristics =
+            service.characteristics;
+        characteristics.forEach((c) {
+          log("connectDevice: characteristic: $c");
+          final BluetoothDefaultCharacteristicUUID knownCharacteristic =
+              BluetoothDefaultCharacteristicUUID.values
+                  .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
+          log("connectDevice: knownCharacteristic: $knownCharacteristic");
+        });
+        break;
+      default:
+        break;
+    }
+
+    log("gss2: $gss");
+
+    return gss;
   }).toList();
 }
