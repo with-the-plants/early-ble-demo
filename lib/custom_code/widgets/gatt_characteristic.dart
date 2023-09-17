@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'dart:developer' show log;
@@ -34,17 +36,27 @@ class GattCharacteristic extends StatefulWidget {
 
 class GattCharacteristicModel extends FlutterFlowModel {
   late BluetoothDevice device;
-  late BluetoothService service;
-  late BluetoothCharacteristic characteristic;
-  late Stream<List<int>> dataStream;
+  late BluetoothService? service;
+  late BluetoothCharacteristic? characteristic;
+  late Stream<List<int>>? dataStream;
 
   void initState(BuildContext context) {
-    final GattCharacteristic gc = GattCharacteristic.of(context);
-    device = BluetoothDevice.fromId(c.deviceId);
-    service = device.servicesList.firstWhere((s) => (s.uuid == gc.serviceId));
-    characteristic = service.characteristics
-        .firstWhere((c) => (c.uuid == gc.characteristicId));
-    dataStream = characteristic.lastValueStream;
+    final GattCharacteristic gc = context.widget as GattCharacteristic;
+    try {
+      device = BluetoothDevice.fromId(gc.deviceId);
+      log("device: $device");
+      service = device.servicesList
+          ?.firstWhere((s) => s.uuid.toString() == gc.serviceId);
+      log("service: $service");
+      characteristic = service?.characteristics
+          ?.firstWhere((c) => (c.uuid.toString() == gc.characteristicId));
+      log("characteristic: $characteristic");
+      dataStream = characteristic?.lastValueStream;
+      log("stream: $dataStream");
+      characteristic?.read();
+    } catch (e) {
+      log("error: $e");
+    }
   }
 
   void dispose() {}
@@ -75,7 +87,7 @@ class _GattCharacteristicState extends State<GattCharacteristic> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<int>>(
         stream: _model.dataStream,
-        initialData: 0,
+        initialData: [],
         builder: (
           BuildContext context,
           AsyncSnapshot<List<int>> snapshot,
@@ -83,11 +95,18 @@ class _GattCharacteristicState extends State<GattCharacteristic> {
           switch (snapshot.connectionState) {
             case ConnectionState.active:
             case ConnectionState.done:
-              return Text(snapshot.hasError
-                  ? 'error'
-                  : snapshot.hasData
-                      ? snapshot.data.first.toString()
-                      : '(empty)');
+              log("snapshot: $snapshot");
+              late String s;
+              if (snapshot.hasError) {
+                s = 'error';
+              } else if (snapshot.data != null) {
+                s = snapshot.data.toString();
+                s += "\n";
+                s += String.fromCharCodes(snapshot.data ?? []);
+              } else {
+                s = 'empty';
+              }
+              return Text(s);
             default:
               return Text('(default)');
           }

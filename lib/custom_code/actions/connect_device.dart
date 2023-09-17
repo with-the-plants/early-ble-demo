@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'index.dart'; // Imports other custom actions
 
+import 'index.dart'; // Imports other custom actions
+
 // Imports other custom actions
 import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -45,13 +47,19 @@ Future<void> connectDevice(
 
     switch (knownService) {
       case BluetoothDefaultServiceUUID.deviceInformation:
+      case BluetoothDefaultServiceUUID.currentTime:
+      case BluetoothDefaultServiceUUID.battery:
         final List<BluetoothCharacteristic> characteristics =
             service.characteristics;
         characteristics.forEach((c) {
           log("connectDevice: characteristic: $c");
-          final BluetoothDefaultCharacteristicUUID knownCharacteristic =
-              BluetoothDefaultCharacteristicUUID.values
-                  .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
+          final BluetoothDefaultCharacteristicUUID knownCharacteristic;
+          try {
+            knownCharacteristic = BluetoothDefaultCharacteristicUUID.values
+                .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
+          } catch (e) {
+            return;
+          }
           log("connectDevice: knownCharacteristic: $knownCharacteristic");
           gss.characteristics.add(GattCharacteristicStruct(
               name: knownCharacteristic.name, uuid: knownCharacteristic.uuid));
