@@ -46,6 +46,12 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.foundServices = await actions.connectDevice(
         widget.deviceId!,
+        () async {
+          setState(() {
+            _model.services =
+                _model.foundServices!.toList().cast<GattServiceStruct>();
+          });
+        },
       );
       setState(() {
         _model.services =

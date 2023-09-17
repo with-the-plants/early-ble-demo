@@ -15,12 +15,14 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '/custom_code/bluetooth_default_uuids.dart';
 import 'dart:developer' show log;
 
-Future<List<GattServiceStruct>> connectDevice(String id) async {
+Future<List<GattServiceStruct>> connectDevice(
+    String id, Future<dynamic> Function()? update) async {
   final BluetoothDevice device = BluetoothDevice.fromId(id);
   await device.connect();
   final List<BluetoothService> services = await device.discoverServices();
 
-  return services.map((BluetoothService service) {
+  final List<GattServiceStruct> gattServices =
+      services.map((BluetoothService service) {
     log("connectDevice: service: $service");
 
     GattServiceStruct gss = GattServiceStruct(uuid: service.uuid.toString());
@@ -58,4 +60,6 @@ Future<List<GattServiceStruct>> connectDevice(String id) async {
 
     return gss;
   }).toList();
+  update;
+  return gattServices;
 }
