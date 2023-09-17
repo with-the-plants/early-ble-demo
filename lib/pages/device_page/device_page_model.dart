@@ -24,8 +24,6 @@ class DevicePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Custom Action - connectDevice] action in DevicePage widget.
-  List<GattServiceStruct>? foundServices;
   // Model for StranghtIndicator component.
   late StranghtIndicatorModel stranghtIndicatorModel;
   // Model for GattServices component.

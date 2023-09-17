@@ -3,7 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/gatt_service/gatt_service_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'gatt_services_model.dart';
@@ -34,14 +33,6 @@ class _GattServicesWidgetState extends State<GattServicesWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => GattServicesModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.services =
-            widget.initialServices!.toList().cast<GattServiceStruct>();
-      });
-    });
   }
 
   @override
@@ -57,7 +48,7 @@ class _GattServicesWidgetState extends State<GattServicesWidget> {
 
     return Builder(
       builder: (context) {
-        final viewedServices = _model.services.toList();
+        final viewedServices = FFAppState().currentServices.toList();
         return ListView.builder(
           padding: EdgeInsets.zero,
           scrollDirection: Axis.vertical,

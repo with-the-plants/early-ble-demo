@@ -51,6 +51,35 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInFoundDevices(int _index, BTDeviceStruct _value) {
     _foundDevices.insert(_index, _value);
   }
+
+  List<GattServiceStruct> _currentServices = [];
+  List<GattServiceStruct> get currentServices => _currentServices;
+  set currentServices(List<GattServiceStruct> _value) {
+    _currentServices = _value;
+  }
+
+  void addToCurrentServices(GattServiceStruct _value) {
+    _currentServices.add(_value);
+  }
+
+  void removeFromCurrentServices(GattServiceStruct _value) {
+    _currentServices.remove(_value);
+  }
+
+  void removeAtIndexFromCurrentServices(int _index) {
+    _currentServices.removeAt(_index);
+  }
+
+  void updateCurrentServicesAtIndex(
+    int _index,
+    GattServiceStruct Function(GattServiceStruct) updateFn,
+  ) {
+    _currentServices[_index] = updateFn(_currentServices[_index]);
+  }
+
+  void insertAtIndexInCurrentServices(int _index, GattServiceStruct _value) {
+    _currentServices.insert(_index, _value);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

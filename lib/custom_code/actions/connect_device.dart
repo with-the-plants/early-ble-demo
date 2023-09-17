@@ -17,10 +17,12 @@ import 'dart:developer' show log;
 
 Future<List<GattServiceStruct>> connectDevice(
     String id, Future<dynamic> Function()? update) async {
+  final state = FFAppState();
+
   final BluetoothDevice device = BluetoothDevice.fromId(id);
   await device.connect();
-  final List<BluetoothService> services = await device.discoverServices();
 
+  final List<BluetoothService> services = await device.discoverServices();
   final List<GattServiceStruct> gattServices =
       services.map((BluetoothService service) {
     log("connectDevice: service: $service");
