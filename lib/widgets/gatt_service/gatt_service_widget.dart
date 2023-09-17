@@ -76,7 +76,7 @@ class _GattServiceWidgetState extends State<GattServiceWidget> {
           ),
           Divider(
             thickness: 1.0,
-            color: FlutterFlowTheme.of(context).accent4,
+            color: FlutterFlowTheme.of(context).secondary,
           ),
           Builder(
             builder: (context) {
@@ -93,12 +93,17 @@ class _GattServiceWidgetState extends State<GattServiceWidget> {
                       characteristics[characteristicsIndex];
                   return Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).secondary,
+                      ),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Column(
                           mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               characteristicsItem.name,
