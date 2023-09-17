@@ -3,7 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/widgets/gatt_service/gatt_service_widget.dart';
+import '/widgets/gatt_services/gatt_services_widget.dart';
 import '/widgets/stranght_indicator/stranght_indicator_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
@@ -140,9 +140,11 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
               children: [
                 Expanded(
                   child: wrapWithModel(
-                    model: _model.gattServiceModel,
+                    model: _model.gattServicesModel,
                     updateCallback: () => setState(() {}),
-                    child: GattServiceWidget(),
+                    child: GattServicesWidget(
+                      initialServices: _model.services!,
+                    ),
                   ),
                 ),
               ],
