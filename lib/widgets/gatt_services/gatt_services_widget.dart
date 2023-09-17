@@ -1,4 +1,3 @@
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/gatt_service/gatt_service_widget.dart';
@@ -11,10 +10,10 @@ export 'gatt_services_model.dart';
 class GattServicesWidget extends StatefulWidget {
   const GattServicesWidget({
     Key? key,
-    required this.initialServices,
+    required this.deviceId,
   }) : super(key: key);
 
-  final List<GattServiceStruct>? initialServices;
+  final String? deviceId;
 
   @override
   _GattServicesWidgetState createState() => _GattServicesWidgetState();
@@ -61,6 +60,7 @@ class _GattServicesWidgetState extends State<GattServicesWidget> {
                 key: Key(
                     'Keyyx7_${viewedServicesIndex}_of_${viewedServices.length}'),
                 service: viewedServicesItem,
+                deviceId: widget.deviceId!,
               ),
             );
           },

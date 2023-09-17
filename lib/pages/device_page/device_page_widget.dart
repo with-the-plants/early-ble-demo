@@ -146,7 +146,7 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
                     model: _model.gattServicesModel,
                     updateCallback: () => setState(() {}),
                     child: GattServicesWidget(
-                      initialServices: _model.services,
+                      deviceId: widget.deviceId!,
                     ),
                   ),
                 ),

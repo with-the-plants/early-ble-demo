@@ -1,6 +1,7 @@
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +12,11 @@ class GattServiceWidget extends StatefulWidget {
   const GattServiceWidget({
     Key? key,
     required this.service,
+    required this.deviceId,
   }) : super(key: key);
 
   final GattServiceStruct? service;
+  final String? deviceId;
 
   @override
   _GattServiceWidgetState createState() => _GattServiceWidgetState();
@@ -74,53 +77,61 @@ class _GattServiceWidgetState extends State<GattServiceWidget> {
               ),
             ],
           ),
-          Divider(
-            thickness: 1.0,
-            color: FlutterFlowTheme.of(context).secondary,
-          ),
-          Builder(
-            builder: (context) {
-              final characteristics =
-                  widget.service?.characteristics?.toList() ?? [];
-              return ListView.separated(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: characteristics.length,
-                separatorBuilder: (_, __) => SizedBox(height: 10.0),
-                itemBuilder: (context, characteristicsIndex) {
-                  final characteristicsItem =
-                      characteristics[characteristicsIndex];
-                  return Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).secondary,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              characteristicsItem.name,
-                              style: FlutterFlowTheme.of(context).labelLarge,
-                            ),
-                            Text(
-                              characteristicsItem.uuid,
-                              style: FlutterFlowTheme.of(context).labelSmall,
-                            ),
-                          ],
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+            child: Builder(
+              builder: (context) {
+                final characteristics =
+                    widget.service?.characteristics?.toList() ?? [];
+                return ListView.separated(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: characteristics.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 10.0),
+                  itemBuilder: (context, characteristicsIndex) {
+                    final characteristicsItem =
+                        characteristics[characteristicsIndex];
+                    return Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).secondary,
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                characteristicsItem.name,
+                                style: FlutterFlowTheme.of(context).labelLarge,
+                              ),
+                              Text(
+                                characteristicsItem.uuid,
+                                style: FlutterFlowTheme.of(context).labelSmall,
+                              ),
+                              Container(
+                                height: 16.0,
+                                child: custom_widgets.GattCharacteristic(
+                                  height: 16.0,
+                                  deviceId: widget.deviceId!,
+                                  serviceId: widget.service!.uuid,
+                                  characteristicId: characteristicsItem.uuid,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
