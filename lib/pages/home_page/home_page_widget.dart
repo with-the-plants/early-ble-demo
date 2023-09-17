@@ -35,7 +35,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.findDevices();
+      await actions.findDevices(
+        () async {
+          setState(() {});
+        },
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

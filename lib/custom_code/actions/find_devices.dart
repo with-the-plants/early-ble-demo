@@ -12,7 +12,7 @@ import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'dart:developer' show log;
 
-Future<void> findDevices() async {
+Future<void> findDevices(Future<dynamic> Function() update) async {
   log("findDevices: constructing devices…");
   final UNKNOWN = "(unknown)"; // TBD. Localize?
   final Stream<List<ScanResult>> scanResults = FlutterBluePlus.scanResults;
@@ -42,6 +42,7 @@ Future<void> findDevices() async {
         state.addToFoundDevices(newDevice);
       }
     });
+    update;
   });
 
   final isScanning = FlutterBluePlus.isScanningNow;
