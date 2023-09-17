@@ -56,7 +56,7 @@ class _GattServicesWidgetState extends State<GattServicesWidget> {
           itemBuilder: (context, viewedServicesIndex) {
             final viewedServicesItem = viewedServices[viewedServicesIndex];
             return Container(
-              height: 200.0,
+              decoration: BoxDecoration(),
               child: GattServiceWidget(
                 key: Key(
                     'Keyyx7_${viewedServicesIndex}_of_${viewedServices.length}'),
