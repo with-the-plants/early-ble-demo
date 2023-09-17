@@ -1,8 +1,9 @@
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/widgets/display_received_data/display_received_data_widget.dart';
+import '/widgets/gatt_service/gatt_service_widget.dart';
 import '/widgets/stranght_indicator/stranght_indicator_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
@@ -14,28 +15,25 @@ class DevicePageModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // Stores action output result for [Custom Action - connectDevice] action in DevicePage widget.
+  List<GattServiceStruct>? services;
   // Model for StranghtIndicator component.
   late StranghtIndicatorModel stranghtIndicatorModel;
-  // State field(s) for TextField widget.
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
-  // Model for DisplayReceivedData component.
-  late DisplayReceivedDataModel displayReceivedDataModel;
+  // Model for GattService component.
+  late GattServiceModel gattServiceModel;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
     stranghtIndicatorModel =
         createModel(context, () => StranghtIndicatorModel());
-    displayReceivedDataModel =
-        createModel(context, () => DisplayReceivedDataModel());
+    gattServiceModel = createModel(context, () => GattServiceModel());
   }
 
   void dispose() {
     unfocusNode.dispose();
     stranghtIndicatorModel.dispose();
-    textController?.dispose();
-    displayReceivedDataModel.dispose();
+    gattServiceModel.dispose();
   }
 
   /// Action blocks are added here.

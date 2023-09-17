@@ -13,26 +13,40 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '/custom_code/bluetooth_default_uuids.dart';
 import 'dart:developer' show log;
 
-Future<void> connectDevice(String id) async {
+Future<List<GattServiceStruct>> connectDevice(String id) async {
   final BluetoothDevice device = BluetoothDevice.fromId(id);
   await device.connect();
   final List<BluetoothService> services = await device.discoverServices();
-  services.forEach((BluetoothService service) {
+
+  return services.map((BluetoothService service) {
     log("connectDevice: service: $service");
+
+    GattServiceStruct ss = GattServiceStruct(uuid: service.uuid.toString());
 
     final BluetoothDefaultServiceUUID knownService = BluetoothDefaultServiceUUID
         .values
-        .firstWhere((uuid) => (service.uuid.toString() == uuid.uuid));
-    log("connectDevice: knownService: $knownService");
+        .firstWhere((uuid) => (ss == uuid.uuid));
+    if (knownService) {
+      log("connectDevice: knownService: $knownService");
 
-    switch (knownService) {
-      case BluetoothDefaultServiceUUID.deviceInformation:
-        final List<BluetoothCharacteristic> characteristics =
-            service.characteristics;
-        characteristics.forEach((c) {
-          log("connectDevice: characteristic: $c");
-        });
-        break;
+      ss.name = knownService.name;
+
+      switch (knownService) {
+        case BluetoothDefaultServiceUUID.deviceInformation:
+          final List<BluetoothCharacteristic> characteristics =
+              service.characteristics;
+          characteristics.forEach((c) {
+            log("connectDevice: characteristic: $c");
+            final BluetoothDefaultCharacteristicUUID knownCharacteristic =
+                BluetoothDefaultCharacteristicUUID.values
+                    .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
+            log("connectDevice: knownCharacteristic: $knownCharacteristic");
+          });
+          break;
+        default:
+          break;
+      }
     }
-  });
+    return ss;
+  }).toList();
 }
