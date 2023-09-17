@@ -12,6 +12,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class DevicePageModel extends FlutterFlowModel {
+  ///  Local state fields for this page.
+
+  List<GattServiceStruct> services = [];
+  void addToServices(GattServiceStruct item) => services.add(item);
+  void removeFromServices(GattServiceStruct item) => services.remove(item);
+  void removeAtIndexFromServices(int index) => services.removeAt(index);
+  void updateServicesAtIndex(int index, Function(GattServiceStruct) updateFn) =>
+      services[index] = updateFn(services[index]);
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
