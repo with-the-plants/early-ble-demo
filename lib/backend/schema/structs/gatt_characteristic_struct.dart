@@ -9,10 +9,8 @@ class GattCharacteristicStruct extends BaseStruct {
   GattCharacteristicStruct({
     String? uuid,
     String? name,
-    DocumentReference? foo,
   })  : _uuid = uuid,
-        _name = name,
-        _foo = foo;
+        _name = name;
 
   // "uuid" field.
   String? _uuid;
@@ -26,17 +24,10 @@ class GattCharacteristicStruct extends BaseStruct {
   set name(String? val) => _name = val;
   bool hasName() => _name != null;
 
-  // "foo" field.
-  DocumentReference? _foo;
-  DocumentReference? get foo => _foo;
-  set foo(DocumentReference? val) => _foo = val;
-  bool hasFoo() => _foo != null;
-
   static GattCharacteristicStruct fromMap(Map<String, dynamic> data) =>
       GattCharacteristicStruct(
         uuid: data['uuid'] as String?,
         name: data['name'] as String?,
-        foo: data['foo'] as DocumentReference?,
       );
 
   static GattCharacteristicStruct? maybeFromMap(dynamic data) =>
@@ -47,7 +38,6 @@ class GattCharacteristicStruct extends BaseStruct {
   Map<String, dynamic> toMap() => {
         'uuid': _uuid,
         'name': _name,
-        'foo': _foo,
       }.withoutNulls;
 
   @override
@@ -59,10 +49,6 @@ class GattCharacteristicStruct extends BaseStruct {
         'name': serializeParam(
           _name,
           ParamType.String,
-        ),
-        'foo': serializeParam(
-          _foo,
-          ParamType.DocumentReference,
         ),
       }.withoutNulls;
 
@@ -79,12 +65,6 @@ class GattCharacteristicStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        foo: deserializeParam(
-          data['foo'],
-          ParamType.DocumentReference,
-          false,
-          collectionNamePath: [''],
-        ),
       );
 
   @override
@@ -94,21 +74,18 @@ class GattCharacteristicStruct extends BaseStruct {
   bool operator ==(Object other) {
     return other is GattCharacteristicStruct &&
         uuid == other.uuid &&
-        name == other.name &&
-        foo == other.foo;
+        name == other.name;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([uuid, name, foo]);
+  int get hashCode => const ListEquality().hash([uuid, name]);
 }
 
 GattCharacteristicStruct createGattCharacteristicStruct({
   String? uuid,
   String? name,
-  DocumentReference? foo,
 }) =>
     GattCharacteristicStruct(
       uuid: uuid,
       name: name,
-      foo: foo,
     );
