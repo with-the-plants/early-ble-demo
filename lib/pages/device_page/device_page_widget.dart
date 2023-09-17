@@ -47,6 +47,10 @@ class _DevicePageWidgetState extends State<DevicePageWidget> {
       _model.foundServices = await actions.connectDevice(
         widget.deviceId!,
       );
+      setState(() {
+        _model.services =
+            _model.foundServices!.toList().cast<GattServiceStruct>();
+      });
     });
   }
 
