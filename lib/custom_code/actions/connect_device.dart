@@ -27,7 +27,8 @@ Future<void> connectDevice(
   services.forEach((BluetoothService service) {
     log("connectDevice: service: $service");
 
-    GattServiceStruct gss = GattServiceStruct(uuid: service.uuid.toString());
+    GattServiceStruct gss =
+        GattServiceStruct(uuid: service.uuid.toString(), characteristics: []);
 
     log("gss: $gss");
 
@@ -52,6 +53,8 @@ Future<void> connectDevice(
               BluetoothDefaultCharacteristicUUID.values
                   .firstWhere((uuid) => (c.uuid.toString() == uuid.uuid));
           log("connectDevice: knownCharacteristic: $knownCharacteristic");
+          gss.characteristics.add(GattCharacteristicStruct(
+              name: knownCharacteristic.name, uuid: knownCharacteristic.uuid));
         });
         break;
       default:

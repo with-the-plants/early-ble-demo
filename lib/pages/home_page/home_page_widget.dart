@@ -310,222 +310,220 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ],
                                     ),
                                   ),
-                                  SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  'Found Bluetooth LE devices',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ),
-                                              Icon(
-                                                Icons.refresh_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 24.0,
-                                              ),
-                                              Text(
-                                                'Scanning…',
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 10.0, 0.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Found Bluetooth LE devices',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodySmall
+                                                        .bodyLarge
                                                         .override(
                                                           fontFamily: 'Outfit',
+                                                          fontWeight:
+                                                              FontWeight.w500,
                                                         ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final foundDevicesList =
-                                                  FFAppState()
-                                                      .foundDevices
-                                                      .toList();
-                                              return ListView.builder(
-                                                padding: EdgeInsets.zero,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount:
-                                                    foundDevicesList.length,
-                                                itemBuilder: (context,
-                                                    foundDevicesListIndex) {
-                                                  final foundDevicesListItem =
-                                                      foundDevicesList[
-                                                          foundDevicesListIndex];
-                                                  return Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 12.0),
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondary,
-                                                        ),
+                                            ),
+                                            Icon(
+                                              Icons.refresh_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 24.0,
+                                            ),
+                                            Text(
+                                              'Scanning…',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .override(
+                                                        fontFamily: 'Outfit',
                                                       ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    12.0,
-                                                                    16.0,
-                                                                    12.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        foundDevicesListItem
-                                                                            .name,
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyLarge
-                                                                            .override(
-                                                                              fontFamily: 'Outfit',
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                    StranghtIndicatorWidget(
-                                                                      key: Key(
-                                                                          'Key1pd_${foundDevicesListIndex}_of_${foundDevicesList.length}'),
-                                                                      rssi: foundDevicesListItem
-                                                                          .rssi,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .success,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    foundDevicesListItem
-                                                                        .id,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelSmall,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
-                                                              focusColor: Colors
-                                                                  .transparent,
-                                                              hoverColor: Colors
-                                                                  .transparent,
-                                                              highlightColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              onTap: () async {
-                                                                context
-                                                                    .pushNamed(
-                                                                  'DevicePage',
-                                                                  queryParameters:
-                                                                      {
-                                                                    'deviceName':
-                                                                        serializeParam(
-                                                                      foundDevicesListItem
-                                                                          .name,
-                                                                      ParamType
-                                                                          .String,
-                                                                    ),
-                                                                    'deviceId':
-                                                                        serializeParam(
-                                                                      foundDevicesListItem
-                                                                          .id,
-                                                                      ParamType
-                                                                          .String,
-                                                                    ),
-                                                                    'deviceRssi':
-                                                                        serializeParam(
-                                                                      foundDevicesListItem
-                                                                          .rssi,
-                                                                      ParamType
-                                                                          .int,
-                                                                    ),
-                                                                  }.withoutNulls,
-                                                                );
-                                                              },
-                                                              child: Icon(
-                                                                Icons
-                                                                    .arrow_forward_ios_rounded,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                size: 24.0,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final foundDevicesList =
+                                                FFAppState()
+                                                    .foundDevices
+                                                    .toList();
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount:
+                                                  foundDevicesList.length,
+                                              itemBuilder: (context,
+                                                  foundDevicesListIndex) {
+                                                final foundDevicesListItem =
+                                                    foundDevicesList[
+                                                        foundDevicesListIndex];
+                                                return Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 12.0),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  12.0,
+                                                                  16.0,
+                                                                  12.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      foundDevicesListItem
+                                                                          .name,
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyLarge
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  StranghtIndicatorWidget(
+                                                                    key: Key(
+                                                                        'Key1pd_${foundDevicesListIndex}_of_${foundDevicesList.length}'),
+                                                                    rssi: foundDevicesListItem
+                                                                        .rssi,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .success,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  foundDevicesListItem
+                                                                      .id,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelSmall,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              context.pushNamed(
+                                                                'DevicePage',
+                                                                queryParameters:
+                                                                    {
+                                                                  'deviceName':
+                                                                      serializeParam(
+                                                                    foundDevicesListItem
+                                                                        .name,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'deviceId':
+                                                                      serializeParam(
+                                                                    foundDevicesListItem
+                                                                        .id,
+                                                                    ParamType
+                                                                        .String,
+                                                                  ),
+                                                                  'deviceRssi':
+                                                                      serializeParam(
+                                                                    foundDevicesListItem
+                                                                        .rssi,
+                                                                    ParamType
+                                                                        .int,
+                                                                  ),
+                                                                }.withoutNulls,
+                                                              );
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .arrow_forward_ios_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 24.0,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
