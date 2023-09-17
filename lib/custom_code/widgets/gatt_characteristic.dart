@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:async';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'dart:developer' show log;
+
 class GattCharacteristic extends StatefulWidget {
   const GattCharacteristic({
     Key? key,
@@ -29,26 +33,29 @@ class GattCharacteristic extends StatefulWidget {
 }
 
 class GattCharacteristicModel extends FlutterFlowModel {
-  void initState(BuildContext context) {}
+  late BluetoothDevice device;
+  late BluetoothService service;
+  late BluetoothCharacteristic characteristic;
+  late Stream<List<int>> dataStream;
+
+  void initState(BuildContext context) {
+    final GattCharacteristic gc = GattCharacteristic.of(context);
+    device = BluetoothDevice.fromId(c.deviceId);
+    service = device.servicesList.firstWhere((s) => (s.uuid == gc.serviceId));
+    characteristic = service.characteristics
+        .firstWhere((c) => (c.uuid == gc.characteristicId));
+    dataStream = characteristic.lastValueStream;
+  }
+
   void dispose() {}
-
-  final Stream<int> stream // TBD
-      = (() async* {
-    await Future<void>.delayed(Duration(seconds: 2));
-
-    for (int i = 1; i <= 5; i++) {
-      await Future<void>.delayed(Duration(seconds: 1));
-      yield i;
-    }
-  })();
 }
 
 class _GattCharacteristicState extends State<GattCharacteristic> {
   late GattCharacteristicModel _model;
 
   @override
-  void setState() {
-    super.setState();
+  void setState(VoidCallback cb) {
+    super.setState(cb);
     _model.onUpdate();
   }
 
@@ -66,16 +73,23 @@ class _GattCharacteristicState extends State<GattCharacteristic> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-        stream: _model.stream,
+    return StreamBuilder<List<int>>(
+        stream: _model.dataStream,
         initialData: 0,
         builder: (
           BuildContext context,
-          AsyncSnapshot<int> snapshot,
+          AsyncSnapshot<List<int>> snapshot,
         ) {
           switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.done:
+              return Text(snapshot.hasError
+                  ? 'error'
+                  : snapshot.hasData
+                      ? snapshot.data.first.toString()
+                      : '(empty)');
             default:
-              return Text('default');
+              return Text('(default)');
           }
         });
   }
